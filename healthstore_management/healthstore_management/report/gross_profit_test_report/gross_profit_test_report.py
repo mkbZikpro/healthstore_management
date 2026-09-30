@@ -420,9 +420,6 @@ class GrossProfitGenerator:
 
 		self.load_stock_entries()
 
-		print("Grouped Data:", self.grouped)
-		print("Stock Entries:", self.stock_entries)
-
 		grouped_by_invoice = True if self.filters.get("group_by") == "Invoice" else False
 
 		for entry in self.stock_entries:
@@ -679,9 +676,7 @@ class GrossProfitGenerator:
 		return False
 
 	def get_buying_amount_from_product_bundle(self, row, product_bundle):
-		# if "buying_amount" not in row:
-		# 	row["buying_amount"] = 0.0
-		# buying_amount = 0.0
+		buying_amount = 0.0
 		for packed_item in product_bundle:
 			if packed_item.get("parent_detail_docname") == row.item_row:
 				packed_item_row = row.copy()
@@ -817,7 +812,7 @@ class GrossProfitGenerator:
 		if row.cost_center:
 			query = query.where(purchase_invoice_item.cost_center == row.cost_center)
 
-		query = query.orderby(purchase_invoice.posting_date, order=frappe.qb.desc).limit(1)
+		query = query.orderby(purchase_invoice.posting_date, order=Order.desc).limit(1)
 		last_purchase_rate = query.run()
 
 		return flt(last_purchase_rate[0][0]) if last_purchase_rate else 0

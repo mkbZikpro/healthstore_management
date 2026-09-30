@@ -4,7 +4,7 @@ app_publisher = "Zikpro Ltd"
 app_description = "Health store management"
 app_email = "abc@gmail.com"
 app_license = "mit"
-# required_apps = []
+required_apps = ["erpnext"]
 
 # Includes in <head>
 # ------------------
